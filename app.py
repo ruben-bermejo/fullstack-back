@@ -53,7 +53,8 @@ def crear_fichero():
 tamanos_pizza = {
     "p": "Pequeña",
     "m": "Mediana",
-    "g": "Grande"
+    "g": "Grande",
+    "x": "XXL"
 }
 
 ingredientes = {
