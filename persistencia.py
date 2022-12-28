@@ -1,9 +1,10 @@
+"""Herramientas principales para trabajar con streams"""
 from io import StringIO
 
 FIELD_SEPARATOR="|"
 
 def guardar_pedido(nombre, apellidos):
-    """Escribe una línea con el formato "nombre apellidos " en el fichero "pedidos.txt" 
+    """Escribe una línea con el formato "nombre apellidos " en el fichero "pedidos.txt"
         Atributos:
             nombre: El nombre de la persona que hace el pedido
             apellidos: Los apellidos de la persona que hace el pedido
@@ -13,27 +14,26 @@ def guardar_pedido(nombre, apellidos):
         file.close()
 
 def guardar_pedido_completo(pedido: object):
-    """Escribe una línea con el formato "nombre|apellidos|...|ingredientes " en el fichero "pedidos.txt" 
+    """Escribe una línea con el formato "nombre|apellidos|..." en el fichero "pedidos.txt"
         Atributos:
             pedido: Objeto de la clase Pedido que contiene todos los datos del pedido
     """
-    sb = StringBuilder()
-    sb.append(pedido.nombre)
-    sb.append(FIELD_SEPARATOR)
-    sb.append(pedido.apellidos)
-    sb.append(FIELD_SEPARATOR)
-    sb.append(pedido.telefono)
-    sb.append(FIELD_SEPARATOR)
-    sb.append(pedido.nacimiento)
-    sb.append(FIELD_SEPARATOR)
-    sb.append(pedido.direccion)
-    sb.append(FIELD_SEPARATOR)
-    sb.append(pedido.tamano)
-    sb.append(FIELD_SEPARATOR)
-    sb.append(str(pedido.ingredientes))
-    
+    linea_pedido = StringBuilder()
+    linea_pedido.append(pedido.nombre)
+    linea_pedido.append(FIELD_SEPARATOR)
+    linea_pedido.append(pedido.apellidos)
+    linea_pedido.append(FIELD_SEPARATOR)
+    linea_pedido.append(pedido.telefono)
+    linea_pedido.append(FIELD_SEPARATOR)
+    linea_pedido.append(pedido.nacimiento)
+    linea_pedido.append(FIELD_SEPARATOR)
+    linea_pedido.append(pedido.direccion)
+    linea_pedido.append(FIELD_SEPARATOR)
+    linea_pedido.append(pedido.tamano)
+    linea_pedido.append(FIELD_SEPARATOR)
+    linea_pedido.append(str(pedido.ingredientes))
     with open("pedidos.txt", "a", encoding="utf-8") as file:
-        file.write(str(sb))
+        file.write(str(linea_pedido))
         file.close()
 
 class StringBuilder:
@@ -49,16 +49,15 @@ class StringBuilder:
         return self._file_str.getvalue()
 
 class Pedido:
-    """Esta clae define los datos de un pedido"""
-
+    """Esta clase define los datos de un pedido"""
     def __init__(self, nombre, apellidos):
         self.nombre = nombre
         self.apellidos = apellidos
-        self.telefono = None;
-        self.nacimiento = None;
-        self.direccion = None;
-        self.tamano = None;
-        self.ingredientes = [];
+        self.telefono = None
+        self.nacimiento = None
+        self.direccion = None
+        self.tamano = None
+        self.ingredientes = []
 
     def __str__(self):
         detalles = ''

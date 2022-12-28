@@ -1,5 +1,8 @@
+"""Tipos básicos de fecha y hora"""
 from datetime import datetime
+"""Framework de utilidad para creación de aplicaciones web"""
 from flask import Flask, request, redirect
+"""Módulo persistencia con funciones para procesar pedidos"""
 from persistencia import guardar_pedido_completo, Pedido, StringBuilder, FIELD_SEPARATOR
 
 app = Flask(__name__)
@@ -39,7 +42,7 @@ def procesar_pedido():
     crear_fichero()
     guardar_pedido_completo(pedido)
     return redirect("http://localhost/pizza-fullstack/solicita_pedido.html", code = 302)
-    
+
 def crear_fichero():
     """Crea un fichero "pedidos.txt" vacío."""
     header = StringBuilder()
