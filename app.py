@@ -1,8 +1,6 @@
-"""Tipos básicos de fecha y hora"""
+"""Clase principal del backend de pizza fullstack"""
 from datetime import datetime
-"""Framework de utilidad para creación de aplicaciones web"""
 from flask import Flask, request, redirect
-"""Módulo persistencia con funciones para procesar pedidos"""
 from persistencia import guardar_pedido_completo, Pedido, StringBuilder, FIELD_SEPARATOR
 
 app = Flask(__name__)
@@ -21,7 +19,8 @@ def procesar_pedido():
     peppe = request.form.get("peppe")
     champis = request.form.get("champis")
     aceitunas = request.form.get("aceitunas")
-    pedido = Pedido(nombre, apellidos)
+    pedido = Pedido()
+    pedido.iniciar(nombre, apellidos)
     if telefono:
         pedido.telefono = telefono
     if fecha_nacimiento:
@@ -38,7 +37,7 @@ def procesar_pedido():
         pedido.ingredientes.append(ingredientes.get(champis))
     if aceitunas:
         pedido.ingredientes.append(ingredientes.get(aceitunas))
-    print(pedido)
+    pedido.imprimir()
     crear_fichero()
     guardar_pedido_completo(pedido)
     return redirect("http://localhost/pizza-fullstack/solicita_pedido.html", code = 302)
@@ -60,7 +59,7 @@ def crear_fichero():
     header.append(FIELD_SEPARATOR)
     header.append("INGREDIENTES")
     with open("pedidos.txt", "w", encoding="utf-8") as file:
-        file.write(str(header) + "\n")
+        file.write(header.to_string() + "\n")
         file.close()
 
 tamanos_pizza = {
