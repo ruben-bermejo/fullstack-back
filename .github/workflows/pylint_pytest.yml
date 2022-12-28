@@ -1,0 +1,20 @@
+name: Pylint
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pylint pytest flask
+    - name: Pylint
+      run: pylint `ls -R|grep .py$|xargs`
+    - name: Pytest
+      run: pytest `ls -R|grep test_*.py$|xargs`
