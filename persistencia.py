@@ -44,9 +44,9 @@ class StringBuilder:
     def __init__(self):
         self._file_str = StringIO()
 
-    def append(self, str):
+    def append(self, texto: str):
         """Función para concatenar un string al final de otro"""
-        self._file_str.write(str)
+        self._file_str.write(texto)
 
     def to_string(self):
         """Función para convertir el StringBuilder a string"""
@@ -64,6 +64,7 @@ class Pedido:
     ingredientes = set
 
     def iniciar(self, nombre, apellidos):
+        """Inicializa un pedido con los datos obligatorios"""
         self.nombre = nombre
         self.apellidos = apellidos
         self.telefono = None
@@ -73,6 +74,7 @@ class Pedido:
         self.ingredientes = []
 
     def imprimir(self):
+        """Imprime por consola el detalle del pedido"""
         detalles = ''
         detalles += f'Nombre               : {self.nombre}\n'
         detalles += f'Apellidos            : {self.apellidos}\n'
