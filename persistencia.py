@@ -1,8 +1,9 @@
 from io import StringIO
 
+FIELD_SEPARATOR="|"
+
 def guardar_pedido(nombre, apellidos):
-    """ Escribe una línea con el formato "nombre apellidos " en el fichero "pedidos.txt" 
-    
+    """Escribe una línea con el formato "nombre apellidos " en el fichero "pedidos.txt" 
         Atributos:
             nombre: El nombre de la persona que hace el pedido
             apellidos: Los apellidos de la persona que hace el pedido
@@ -12,25 +13,23 @@ def guardar_pedido(nombre, apellidos):
         file.close()
 
 def guardar_pedido_completo(pedido: object):
-    """ Escribe una línea con el formato "nombre|apellidos|...|ingredientes " en el fichero "pedidos.txt" 
-    
+    """Escribe una línea con el formato "nombre|apellidos|...|ingredientes " en el fichero "pedidos.txt" 
         Atributos:
             pedido: Objeto de la clase Pedido que contiene todos los datos del pedido
     """
-    field_separator = "|"
     sb = StringBuilder()
     sb.append(pedido.nombre)
-    sb.append(field_separator)
+    sb.append(FIELD_SEPARATOR)
     sb.append(pedido.apellidos)
-    sb.append(field_separator)
+    sb.append(FIELD_SEPARATOR)
     sb.append(pedido.telefono)
-    sb.append(field_separator)
+    sb.append(FIELD_SEPARATOR)
     sb.append(pedido.nacimiento)
-    sb.append(field_separator)
+    sb.append(FIELD_SEPARATOR)
     sb.append(pedido.direccion)
-    sb.append(field_separator)
+    sb.append(FIELD_SEPARATOR)
     sb.append(pedido.tamano)
-    sb.append(field_separator)
+    sb.append(FIELD_SEPARATOR)
     sb.append(str(pedido.ingredientes))
     
     with open("pedidos.txt", "a", encoding="utf-8") as file:
