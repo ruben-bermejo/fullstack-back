@@ -21,7 +21,7 @@ def test_guardar_pedido():
     """Prueba básica"""
     crear_fichero()
     escribir_fichero()
-    with open("pedidos.txt", "w", encoding="utf-8") as file:
+    with open("pedidos.txt", "r", encoding="utf-8") as file:
         firstline = file.readline()
         secondline = file.readline()
         file.close()
