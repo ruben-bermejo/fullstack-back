@@ -17,5 +17,13 @@ def escribir_fichero():
     for person in pedidos:
         guardar_pedido(person["nombre"], person["apellidos"])
 
-crear_fichero()
-escribir_fichero()
+def test_guardar_pedido():
+    """Prueba básica"""
+    crear_fichero()
+    escribir_fichero()
+    with open("pedidos.txt", "w", encoding="utf-8") as file:
+        firstline = file.readline()
+        secondline = file.readline()
+        file.close()
+    assert firstline == "José Rubén Bermejo Sanz\n"
+    assert secondline == "Michael Scott\n"
