@@ -1,12 +1,11 @@
 """Clase principal del backend de pizza fullstack"""
 from datetime import datetime
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, Response
 from persistencia import guardar_pedido_completo, Pedido, StringBuilder, FIELD_SEPARATOR
 
 app = Flask(__name__)
 
 @app.route("/pizza", methods=['POST'])
-
 def procesar_pedido():
     """Crea fichero con nombre y apellidos desde frontend y redirige a solicita_pedido"""
     nombre = request.form.get("nombre")
@@ -61,6 +60,15 @@ def crear_fichero():
     with open("pedidos.txt", "w", encoding="utf-8") as file:
         file.write(header.to_string() + "\n")
         file.close()
+
+@app.route("/checksize", methods=['POST'])
+def checksize():
+    """ Comprueba disponibilidad dependiendo del tamaño de pizza """
+    mensaje = "Disponible"
+    tamano_pizza = request.form.get("tamano")
+    if tamano_pizza == "p":
+        mensaje = "No disponible"
+    return Response(mensaje, 200, {'Access-Control-Allow-Origin':'*'})
 
 tamanos_pizza = {
     "p": "Pequeña",
