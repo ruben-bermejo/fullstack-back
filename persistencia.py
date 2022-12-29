@@ -11,7 +11,7 @@ def guardar_pedido(nombre, apellidos):
             apellidos: Los apellidos de la persona que hace el pedido
     """
     with open("pedidos.txt", "a", encoding="utf-8") as file:
-        file.write(nombre + " " + apellidos + "\n")
+        file.write("-" + nombre + " " + apellidos + "\n")
         file.close()
 
 def guardar_pedido_completo(pedido: object):
