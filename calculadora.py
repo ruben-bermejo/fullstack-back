@@ -6,4 +6,4 @@ def sumar(sumando_1, sumando_2):
 
 def restar(sustraendo_1,sustraendo_2):
     """ Resta dos números """
-    return sustraendo_1 + sustraendo_2
+    return sustraendo_1 - sustraendo_2
