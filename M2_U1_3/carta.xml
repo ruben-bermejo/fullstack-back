@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<carta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="carta.xsd">
+    <remitente>
+        <nombre>Rubén</nombre>
+        <apellidos>Bermejo Sanz</apellidos>
+    </remitente>
+    <destinatario direccion="Calle Miño" provincia="Valladolid" localidad="Laguna de Duero" codigo_postal="47140">
+        <nombre>John</nombre>
+        <apellidos>Doe</apellidos>        
+    </destinatario>
+    <cuerpo>
+        <saludo>Buenos días</saludo>
+        <parrafo>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</parrafo>
+        <parrafo>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</parrafo>
+        <firma>Un saludo.</firma>
+        <post_data>PD: Hablamos pronto</post_data>
+    </cuerpo>
+</carta>
