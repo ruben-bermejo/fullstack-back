@@ -1,1 +1,2 @@
 xmlschema == 2.1.1
+pyjwt == 2.6.0
