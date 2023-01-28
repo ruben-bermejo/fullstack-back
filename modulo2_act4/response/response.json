@@ -1,5 +1,5 @@
 {
-    "method": "PUT",
+    "method": "GET",
     "url": "https://jsonplaceholder.typicode.com/comments/6",
     "status": 200,
     "content-type": "application/json; charset=utf-8",
