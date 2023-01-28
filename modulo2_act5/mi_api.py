@@ -1,4 +1,4 @@
-"""Clase principal del backend de pizza fullstack"""
+"""Clase que expone el api definido en api_doc.yml"""
 from flask import Flask, send_file
 from flask_swagger_ui import get_swaggerui_blueprint
 
