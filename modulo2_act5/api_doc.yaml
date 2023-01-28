@@ -1,0 +1,132 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: API de pruebas de {JSON} Placeholder
+  description: Falso API gratuito para realizar pruebas y prototipos
+servers:
+  - url: https://jsonplaceholder.typicode.com
+paths:
+  /posts:
+    get:
+      tags:
+        - post
+      description: Devuelve todos los posts
+      operationId: getPosts
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Posts'
+    post:
+      tags:
+        - post
+      description: Crea un post nuevo
+      operationId: addPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+        required: true
+      responses:
+        '201':
+          description: Respuesta exitosa. Nuevo post creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'          
+
+  /posts/{id}:
+    get:
+      tags:
+        - post
+      description: Devuelve un recurso post por su identificador
+      operationId: getPost
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: El identificador del post
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: Recurso no encontrado
+    put:
+      tags:
+        - post
+      description: Modifica un post existente por su identificador
+      operationId: updatePost
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: El identificador del post
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+        required: true
+      responses:
+        '200':
+          description: Respuesta exitosa. Post modificado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'          
+        '404':
+          description: Post no encontrado
+    delete:
+      tags:
+        - post
+      description: Elimina un post
+      operationId: deletePost
+      parameters:
+        - name: id
+          in: path
+          description: El identificador del post
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Respuesta exitosa. Post eliminado
+        '404':
+          description: Post no encontrado
+
+components:
+  schemas:
+    Posts:
+      type: array
+      items:
+        $ref: '#/components/schemas/Post'
+    Post:
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Identificador único del post
+        userId:
+          type: integer
+          format: int64
+          description: Identificador único del usuario
+        title:
+          type: string
+          description: Título del post
+        body:
+          type: string
+          description: Cuerpo del mensaje del post
