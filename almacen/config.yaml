@@ -1,0 +1,4 @@
+basedatos:
+  path: ./bd/almacen3.db
+  consumidor_almacen: tienda_bermejo_sanz
+  consumidor_almacen_key: G3tr0n1c5

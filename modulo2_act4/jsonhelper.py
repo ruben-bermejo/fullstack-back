@@ -18,6 +18,7 @@ def parse_jsonapi(json_data: any, request_url: str):
     """Adecua los datos json devueltos por una request a la especificación jsonapi"""
     json_data_openapi = {"jsonapi": {"version": 1.1},
                         "links": {"self": request_url},
-                        "meta": {"copyright": "(C)2023 Getronics","authors": ["Rubén Bermejo"]},
+                        "meta": {"copyright": "(C)2023 Master Fullstack Developer"
+                                    ,"authors": ["Rubén Bermejo"]},
                         "data": json_data}
     return json_data_openapi

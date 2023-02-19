@@ -1,0 +1,231 @@
+{
+	"info": {
+		"_postman_id": "8d0c68c3-9d56-4cec-b1ff-185c37226df9",
+		"name": "testing_users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14530730"
+	},
+	"item": [
+		{
+			"name": "getUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserByid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validando correo electrónico userId=1\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.id == 1){\r",
+							"        pm.expect(responseJson.email).to.eql(\"Sincere@april.biz\");\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "Identificador del usuario"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n    \"name\": \"José Rubén Bermejo Sanz\",\r\n    \"username\": \"jose-ruben.bermejo\",\r\n    \"email\": \"jose-ruben.bermejo@getronics.com\",\r\n    \"address\": {\r\n      \"street\": \"Miño\",\r\n      \"suite\": \"5\",\r\n      \"city\": \"Laguna de Duero\",\r\n      \"zipcode\": \"47140\",\r\n      \"geo\": {\r\n        \"lat\": \"-37.3159\",\r\n        \"lng\": \"81.1496\"\r\n      }\r\n    },\r\n    \"phone\": \"555545454\",\r\n    \"website\": \"getronics.com\",\r\n    \"company\": {\r\n      \"name\": \"Getronics\",\r\n      \"catchPhrase\": \"Multi-layered client-server neural-net\",\r\n      \"bs\": \"harness real-time e-markets\"\r\n    }\r\n  }    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n    \"name\": \"José Rubén Bermejo Sanz\",\r\n    \"username\": \"jose-ruben.bermejo\",\r\n    \"email\": \"jose-ruben.bermejo@getronics.com\",\r\n    \"address\": {\r\n      \"street\": \"Miño\",\r\n      \"suite\": \"5\",\r\n      \"city\": \"Laguna de Duero\",\r\n      \"zipcode\": \"47140\",\r\n      \"geo\": {\r\n        \"lat\": \"-37.3159\",\r\n        \"lng\": \"81.1496\"\r\n      }\r\n    },\r\n    \"phone\": \"555545454\",\r\n    \"website\": \"getronics.com\",\r\n    \"company\": {\r\n      \"name\": \"Getronics\",\r\n      \"catchPhrase\": \"Multi-layered client-server neural-net\",\r\n      \"bs\": \"harness real-time e-markets\"\r\n    }\r\n  }    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "Identificador del usuario que se quiere modificar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "Identificador del usuario que se quiere eliminar"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var status = 200;",
+					"if(pm.info.requestName == \"addUser\"){",
+					"    status = 201",
+					"}",
+					"",
+					"//Validamos código de respuesta",
+					"pm.test(\"Validando código de respuesta\", function () {",
+					"    pm.response.to.have.status(status);",
+					"});",
+					"",
+					"//Validamos que el formato de la respuesta sea JSON",
+					"pm.test(\"Validando cabecera Content-Type\", () => {",
+					"  pm.response.to.have.header(\"Content-Type\");",
+					"  pm.expect(pm.response.headers.get('Content-Type')).to.contains('application/json');",
+					"});"
+				]
+			}
+		}
+	]
+}
