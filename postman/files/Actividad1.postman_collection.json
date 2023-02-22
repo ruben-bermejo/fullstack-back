@@ -1,0 +1,588 @@
+{
+	"info": {
+		"_postman_id": "fb850613-c936-4c8d-886c-45d1ec588e25",
+		"name": "Actividad1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14530730"
+	},
+	"item": [
+		{
+			"name": "almacén",
+			"item": [
+				{
+					"name": "postArticulo",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "api-key-warehouse",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Articulo 202202220944\",\r\n    \"detalle\": \"202202220944\",\r\n    \"stock\": 10,\r\n    \"disponible\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articulo",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articulo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putArticulo",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "api-key-warehouse",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Articulo 202202220944_edited\",\r\n    \"detalle\": \"iPad de 15 pulgadas\",\r\n    \"disponible\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articulo/:id",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articulo",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getArticulos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "api-key-warehouse",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articulo",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articulo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getArticuloByid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "api-key-warehouse",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articulo/:id",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articulo",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putAumentarStock",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "api-key-warehouse",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_almacen}}/articulo/:id/entrada_stock?cantidad=1",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articulo",
+								":id",
+								"entrada_stock"
+							],
+							"query": [
+								{
+									"key": "cantidad",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putDisminuirStock",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "api-key-warehouse",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_almacen}}/articulo/:id/salida_stock?cantidad=1",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articulo",
+								":id",
+								"salida_stock"
+							],
+							"query": [
+								{
+									"key": "cantidad",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteArticulo",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "api-key-warehouse",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articulo/:id",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articulo",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var status = 200;",
+							"if(pm.info.requestName == \"postArticulo\"){",
+							"    status = 201",
+							"}",
+							"",
+							"//Validamos código de respuesta",
+							"pm.test(\"Validando código de respuesta\", function () {",
+							"    pm.response.to.have.status(status);",
+							"});",
+							"",
+							"//Validamos que el formato de la respuesta sea JSON",
+							"pm.test(\"Validando cabecera Content-Type\", () => {",
+							"  pm.response.to.have.header(\"Content-Type\");",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.contains('application/json');",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "tienda",
+			"item": [
+				{
+					"name": "getProductos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProductoByid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto/:id",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putCambiarPrecioProducto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto/:id/cambiar_precio?precio=5",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto",
+								":id",
+								"cambiar_precio"
+							],
+							"query": [
+								{
+									"key": "precio",
+									"value": "5"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putSolicitarProducto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto/:id/solicitar?cantidad=1",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto",
+								":id",
+								"solicitar"
+							],
+							"query": [
+								{
+									"key": "cantidad",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putVenderProducto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto/:id/vender?cantidad=1",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto",
+								":id",
+								"vender"
+							],
+							"query": [
+								{
+									"key": "cantidad",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProducto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto/:id",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var status = 200;",
+							"",
+							"//Validamos código de respuesta",
+							"pm.test(\"Validando código de respuesta\", function () {",
+							"    pm.response.to.have.status(status);",
+							"});",
+							"",
+							"//Validamos que el formato de la respuesta sea JSON",
+							"pm.test(\"Validando cabecera Content-Type\", () => {",
+							"  pm.response.to.have.header(\"Content-Type\");",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.contains('application/json');",
+							"});"
+						]
+					}
+				}
+			]
+		}
+	]
+}
