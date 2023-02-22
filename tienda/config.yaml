@@ -1,0 +1,5 @@
+basedatos:
+  path: ./bd/tienda3.db
+almacen:
+  base_url: http://localhost:5000
+  api_key: {'api-key-warehouse': 'G3tr0n1c5'}

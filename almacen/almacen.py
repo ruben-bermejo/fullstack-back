@@ -1,18 +1,22 @@
-"""Aplicación de almacén para solicitar productos, su detalle y modificar su cantidad"""
+"""Aplicación de almacén para solicitar artículos, su detalle y modificar su cantidad"""
 import argparse
 import json
 from sqlite3 import Error
 import yaml
 from yaml.loader import SafeLoader
-from flask import Flask, request, Response, jsonify
+from flask import Flask, request, Response, jsonify, send_file
+from flask_swagger_ui import get_swaggerui_blueprint
 from marshmallow import ValidationError, INCLUDE
 import persistencia
 from validator import ArticuloSchema, check_authorization
 
 app = Flask(__name__)
 
-MIME_TYPE='text/json'
+MIME_TYPE='application/json'
 UNAUTHORIZED='Acción no permitida: No autenticado.'
+
+SWAGGER_URL = '/api/docs'
+API_URL = '/services/spec'
 
 parser = argparse.ArgumentParser(description='Aplicación de Almacén del Equipo 3')
 parser.add_argument('--servidor',
@@ -50,6 +54,19 @@ def convertir_articulo(body: any):
     # Convertimos el JSON a la clase Articulo
     return persistencia.Articulo.from_json(json.dumps(result, indent=4))
 
+@app.route("/services/spec", methods=['GET'])
+def swagger_yaml():
+    """Recupera el archivo yaml"""
+    return send_file('./api_doc.yaml')
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "API Swagger Almacén"
+    }
+)
+
 @app.route("/articulo", methods=['GET'])
 def obtener_articulos():
     '''Busca todos los artículos en el almacén'''
@@ -64,7 +81,6 @@ def obtener_articulos():
 @app.route("/articulo/<id_articulo>", methods=['GET'])
 def obtener_articulo(id_articulo):
     '''Busca en el almacén un artículo por su identificador único'''
-    print(request.url)
     if check_authorization(request, config_data['basedatos']['consumidor_almacen_key']):
         articulo = persistencia.get_articulo(config_data['basedatos'], id_articulo)
         if not articulo:
@@ -94,7 +110,7 @@ def crear_articulo():
         try:
             creado = persistencia.post_articulo(config_data['basedatos'], articulo)
             return Response(json.dumps(creado, indent=4),
-                            200,
+                            201,
                             {'Access-Control-Allow-Origin':'*'},
                             mimetype=MIME_TYPE)
         except Error as sqlite_err:
@@ -114,7 +130,8 @@ def borrar_articulo(id_articulo):
         persistencia.delete_articulo(config_data['basedatos'], id_articulo)
         return Response('¡Articulo eliminado correctamente!',
                         200,
-                        {'Access-Control-Allow-Origin':'*'})
+                        {'Access-Control-Allow-Origin':'*'},
+                        mimetype=MIME_TYPE)
     return error_response(UNAUTHORIZED,401)
 
 @app.route("/articulo/<id_articulo>", methods=['PUT'])
@@ -186,4 +203,5 @@ def error_response(message: str, code: int):
             {'Access-Control-Allow-Origin':'*'},
             MIME_TYPE)
 
+app.register_blueprint(swaggerui_blueprint)
 app.run(host=args.servidor, port=args.puerto)

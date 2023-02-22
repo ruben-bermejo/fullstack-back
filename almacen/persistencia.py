@@ -136,7 +136,7 @@ def post_articulo(db_config: dict, data: Articulo):
         conn.commit()
         return get_articulo(db_config, cur.lastrowid)
     except Exception as exc:
-        print(f"No se pudo recuperar los articulos debido a {exc}")
+        print(f"No se pudo crear el artículo debido a {exc}")
         raise exc
     finally:
         cur.close()

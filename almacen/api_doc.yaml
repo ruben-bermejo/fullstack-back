@@ -1,0 +1,220 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: API del Almacén
+  description: API para la gestión de articulos del Almacén
+paths:
+  /articulo:
+    get:
+      tags:
+        - articulo
+      description: Devuelve todos los articulos
+      operationId: getArticulo
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Articulos'
+    post:
+      tags:
+        - articulo
+      description: Crea un articulo nuevo
+      operationId: postArticulo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Articulo'
+        required: true
+      responses:
+        '201':
+          description: Respuesta exitosa. Nuevo articulo creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Articulo'          
+        '401':
+          description: No autorizado
+
+  /articulo/{id}:
+    get:
+      tags:
+        - articulo
+      description: Devuelve un recurso articulo por su identificador
+      operationId: getArticuloByid
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: El identificador del articulo
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Articulo'
+        '400':
+          description: Datos de la petición incorrectos
+        '401':
+          description: No autorizado
+        '404':
+          description: Recurso no encontrado
+    put:
+      tags:
+        - articulo
+      description: Modifica un articulo existente por su identificador
+      operationId: putArticulo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: El identificador del articulo
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Articulo'
+        required: true
+      responses:
+        '200':
+          description: Respuesta exitosa. Articulo modificado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Articulo'          
+        '400':
+          description: Datos de la petición incorrectos
+        '401':
+          description: No autorizado
+        '404':
+          description: Articulo no encontrado
+    delete:
+      tags:
+        - articulo
+      description: Elimina un articulo
+      operationId: deleteArticulo
+      parameters:
+        - name: id
+          in: path
+          description: El identificador del articulo
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Respuesta exitosa. Articulo eliminado
+        '401':
+          description: No autorizado
+        '404':
+          description: Articulo no encontrado
+
+  /articulo/{id}/entrada_stock:
+    put:
+      tags:
+        - articulo
+      description: Aumenta el stock de un articulo existente por su identificador
+      operationId: putAumentarStock
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: El identificador del articulo
+          schema:
+            type: integer
+            format: int64
+        - name: cantidad
+          in: query
+          required: true
+          description: Cantidad a aumentar el stock
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Respuesta exitosa. Stock modificado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Articulo'          
+        '400':
+          description: Datos de la petición incorrectos
+        '401':
+          description: No autorizado
+        '404':
+          description: Articulo no encontrado
+
+  /articulo/{id}/salida_stock:
+    put:
+      tags:
+        - articulo
+      description: Disimuye el stock de un articulo existente por su identificador
+      operationId: putDisminuirStock
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: El identificador del articulo
+          schema:
+            type: integer
+            format: int64
+        - name: cantidad
+          in: query
+          required: true
+          description: Cantidad a disminuir el stock
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Respuesta exitosa. Stock modificado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Articulo'          
+        '400':
+          description: Datos de la petición incorrectos
+        '401':
+          description: No autorizado
+        '404':
+          description: Articulo no encontrado
+
+components:
+  securitySchemes:
+    ApiKeyAuth: 
+      type: apiKey
+      in: header
+      name: api-key-warehouse
+  schemas:
+    Articulos:
+      type: array
+      items:
+        $ref: '#/components/schemas/Articulo'
+    Articulo:
+      properties:
+        articulo_id:
+          type: integer
+          format: int64
+          description: Identificador único del artículo
+        nombre:
+          type: string
+          description: Nombre único del artículo
+        detalle:
+          type: string
+          description: Información adicional del artículo
+        disponible:
+          type: boolean
+          description: Indica si el artículo está disponible (1) o no (0)
+        stock:
+          type: integer
+          description: Cantidad disponible del artículo en el almacén
+
+security:
+  - ApiKeyAuth: []
