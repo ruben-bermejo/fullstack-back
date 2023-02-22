@@ -7,7 +7,7 @@ from yaml.loader import SafeLoader
 from flask import Flask, request, Response, jsonify, send_file
 from flask_swagger_ui import get_swaggerui_blueprint
 from marshmallow import ValidationError, INCLUDE
-import persistencia
+import persist_almacen
 from validator import ArticuloSchema, check_authorization
 
 app = Flask(__name__)
@@ -52,7 +52,7 @@ def convertir_articulo(body: any):
     result = ArticuloSchema(unknown=INCLUDE).load(body)
 
     # Convertimos el JSON a la clase Articulo
-    return persistencia.Articulo.from_json(json.dumps(result, indent=4))
+    return persist_almacen.Articulo.from_json(json.dumps(result, indent=4))
 
 @app.route("/services/spec", methods=['GET'])
 def swagger_yaml():
@@ -71,7 +71,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 def obtener_articulos():
     '''Busca todos los artículos en el almacén'''
     if check_authorization(request, config_data['basedatos']['consumidor_almacen_key']):
-        articulos = persistencia.get_articulos(config_data['basedatos'])
+        articulos = persist_almacen.get_articulos(config_data['basedatos'])
         return Response(json.dumps(articulos, indent=4),
                         200,
                         {'Access-Control-Allow-Origin':'*'},
@@ -82,7 +82,7 @@ def obtener_articulos():
 def obtener_articulo(id_articulo):
     '''Busca en el almacén un artículo por su identificador único'''
     if check_authorization(request, config_data['basedatos']['consumidor_almacen_key']):
-        articulo = persistencia.get_articulo(config_data['basedatos'], id_articulo)
+        articulo = persist_almacen.get_articulo(config_data['basedatos'], id_articulo)
         if not articulo:
             return error_response(f'Artículo {id_articulo} no encontrado', 404)
         return Response(json.dumps(articulo, indent=4),
@@ -108,7 +108,7 @@ def crear_articulo():
 
         # Damos de alta el nuevo artículo si pasa las validaciones
         try:
-            creado = persistencia.post_articulo(config_data['basedatos'], articulo)
+            creado = persist_almacen.post_articulo(config_data['basedatos'], articulo)
             return Response(json.dumps(creado, indent=4),
                             201,
                             {'Access-Control-Allow-Origin':'*'},
@@ -127,7 +127,7 @@ def crear_articulo():
 def borrar_articulo(id_articulo):
     '''Servicio para eliminar un artículo'''
     if check_authorization(request, config_data['basedatos']['consumidor_almacen_key']):
-        persistencia.delete_articulo(config_data['basedatos'], id_articulo)
+        persist_almacen.delete_articulo(config_data['basedatos'], id_articulo)
         return Response('¡Articulo eliminado correctamente!',
                         200,
                         {'Access-Control-Allow-Origin':'*'},
@@ -144,7 +144,7 @@ def actualizar_articulo(id_articulo):
         except ValidationError as err:
             return jsonify(err.messages), 400
         articulo.articulo_id = id_articulo
-        modified = persistencia.put_articulo(config_data['basedatos'], articulo)
+        modified = persist_almacen.put_articulo(config_data['basedatos'], articulo)
         return Response(json.dumps(modified, indent=4),
                         200,
                         {'Access-Control-Allow-Origin':'*'},
@@ -157,10 +157,10 @@ def aumentar_stock_articulo(id_articulo):
     if check_authorization(request, config_data['basedatos']['consumidor_almacen_key']):
         cantidad = request.args.get("cantidad", default=0, type=int)
         if cantidad > 0:
-            articulo = persistencia.get_articulo(config_data['basedatos'],id_articulo)
+            articulo = persist_almacen.get_articulo(config_data['basedatos'],id_articulo)
             if articulo:
                 cantidad = cantidad + articulo['stock']
-                mod = persistencia.put_articulo_stock(config_data['basedatos'],
+                mod = persist_almacen.put_articulo_stock(config_data['basedatos'],
                                 id_articulo,
                                 cantidad)
                 return Response(json.dumps(mod, indent=4),
@@ -177,13 +177,13 @@ def disminuir_stock_articulo(id_articulo):
     if check_authorization(request, config_data['basedatos']['consumidor_almacen_key']):
         cantidad = request.args.get("cantidad", default=0, type=int)
         if cantidad > 0:
-            articulo = persistencia.get_articulo(config_data['basedatos'],id_articulo)
+            articulo = persist_almacen.get_articulo(config_data['basedatos'],id_articulo)
             if articulo:
                 disponible = articulo['disponible']
                 if disponible == 1:
                     cantidad = articulo['stock'] - cantidad
                     if cantidad >= 0:
-                        mod = persistencia.put_articulo_stock(config_data['basedatos'],
+                        mod = persist_almacen.put_articulo_stock(config_data['basedatos'],
                                         id_articulo,
                                         cantidad)
                         return Response(json.dumps(mod, indent=4),

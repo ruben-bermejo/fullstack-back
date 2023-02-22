@@ -1,13 +1,12 @@
 """Aplicación de tienda para vender productos de un almacén"""
 import argparse
 import json
-from sqlite3 import Error
 from flask import Flask, request, Response, send_file
 from flask_swagger_ui import get_swaggerui_blueprint
 import yaml
 from yaml.loader import SafeLoader
 from requests import get, put
-import persistencia
+import persist_tienda
 
 app = Flask(__name__)
 
@@ -68,7 +67,7 @@ def init_database():
     '''Si no hay productos invoca los servicios de Almacén para traspasar un
         máximo de 2 unidades de cada artículo'''
     print('Iniciando aplicación tienda')
-    productos = persistencia.get_productos(config_data['basedatos'])
+    productos = persist_tienda.get_productos(config_data['basedatos'])
     if not productos:
         print('No hay productos. Cargando desde el almacén')
         url_articulo = config_data['almacen']['base_url'] + '/articulo'
@@ -85,7 +84,7 @@ def init_database():
                         timeout = 60,
                         headers = config_data['almacen']['api_key'],
                         params = {'cantidad': solicitadas})
-                persistencia.put_crear_producto(config_data['basedatos'],
+                persist_tienda.put_crear_producto(config_data['basedatos'],
                                     solicitadas,
                                     articulo['nombre'],
                                     articulo['articulo_id'])
@@ -93,7 +92,7 @@ def init_database():
 @app.route("/producto", methods=['GET'])
 def obtener_productos():
     '''Busca todos los productos en la tienda'''
-    productos = persistencia.get_productos(config_data['basedatos'])
+    productos = persist_tienda.get_productos(config_data['basedatos'])
     return Response(json.dumps(productos, indent=4),
                     200,
                     {'Access-Control-Allow-Origin':'*'},
@@ -102,7 +101,7 @@ def obtener_productos():
 @app.route("/producto/<id_producto>", methods=['GET'])
 def obtener_producto(id_producto):
     '''Busca en la tienda un producto por su identificador único'''
-    producto = persistencia.get_producto(config_data['basedatos'], id_producto)
+    producto = persist_tienda.get_producto(config_data['basedatos'], id_producto)
     if not producto:
         return error_response(f'Producto {id_producto} no encontrado', 404)
     return Response(json.dumps(producto, indent=4),
@@ -113,7 +112,7 @@ def obtener_producto(id_producto):
 @app.route("/producto/<id_producto>", methods=['DELETE'])
 def borrar_producto(id_producto):
     '''Servicio para eliminar un producto'''
-    persistencia.delete_producto(config_data['basedatos'], id_producto)
+    persist_tienda.delete_producto(config_data['basedatos'], id_producto)
     return Response('¡Producto eliminado correctamente!',
                     200,
                     {'Access-Control-Allow-Origin':'*'},
@@ -125,11 +124,11 @@ def vender_producto(id_producto):
         Verifica que hay unidades disponibles
         Verifica que tiene precio
         Decrementa disponibles e incrementa vendidas'''
-    producto = persistencia.get_producto(config_data['basedatos'], id_producto)
+    producto = persist_tienda.get_producto(config_data['basedatos'], id_producto)
     if not producto:
         return error_response(f'Producto {id_producto} no encontrado', 404)
     if producto['disponibles'] > 0 and producto['precio'] > 0:
-        modificado = persistencia.put_vender_producto(config_data['basedatos'], id_producto)
+        modificado = persist_tienda.put_vender_producto(config_data['basedatos'], id_producto)
         return Response(json.dumps(modificado, indent=4),
                         200,
                         {'Access-Control-Allow-Origin':'*'},
@@ -141,10 +140,10 @@ def cambiar_precio_producto(id_producto):
     '''Servicio para cambiar el precio de un producto'''
     precio = request.args.get("precio", default=0, type=float)
     if precio > 0:
-        producto = persistencia.get_producto(config_data['basedatos'], id_producto)
+        producto = persist_tienda.get_producto(config_data['basedatos'], id_producto)
         if not producto:
             return error_response(f'Producto {id_producto} no encontrado', 404)
-        modificado = persistencia.put_cambiar_precio(config_data['basedatos'], id_producto, precio)
+        modificado = persist_tienda.put_cambiar_precio(config_data['basedatos'], id_producto, precio)
         return Response(json.dumps(modificado, indent=4),
                         200,
                         {'Access-Control-Allow-Origin':'*'},
@@ -159,7 +158,7 @@ def solicitar_producto(id_producto):
         Actualiza el producto con la nueva cantidad disponible'''
     cantidad = request.args.get("cantidad", default=0, type=int)
     if cantidad > 0:
-        producto = persistencia.get_producto(config_data['basedatos'], id_producto)
+        producto = persist_tienda.get_producto(config_data['basedatos'], id_producto)
         if not producto:
             return error_response(f'Producto {id_producto} no encontrado', 404)
         art_id = str(producto['articulo_id'])
@@ -176,7 +175,7 @@ def solicitar_producto(id_producto):
                 timeout = 60,
                 params = {'cantidad': cantidad},
                 headers = config_data['almacen']['api_key'])
-        modificado = persistencia.put_recibir_producto(config_data['basedatos'],
+        modificado = persist_tienda.put_recibir_producto(config_data['basedatos'],
                         id_producto, cantidad)
         return Response(json.dumps(modificado, indent=4),
                         200,
