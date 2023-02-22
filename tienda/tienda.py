@@ -143,7 +143,8 @@ def cambiar_precio_producto(id_producto):
         producto = persist_tienda.get_producto(config_data['basedatos'], id_producto)
         if not producto:
             return error_response(f'Producto {id_producto} no encontrado', 404)
-        modificado = persist_tienda.put_cambiar_precio(config_data['basedatos'], id_producto, precio)
+        modificado = persist_tienda.put_cambiar_precio(config_data['basedatos'],
+            id_producto, precio)
         return Response(json.dumps(modificado, indent=4),
                         200,
                         {'Access-Control-Allow-Origin':'*'},
