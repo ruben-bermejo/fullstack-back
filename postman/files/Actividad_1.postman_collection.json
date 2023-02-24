@@ -1,0 +1,534 @@
+{
+	"info": {
+		"_postman_id": "fd8bb8ce-6127-41fe-bb92-ecdfbe4883d5",
+		"name": "Actividad_1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14530730"
+	},
+	"item": [
+		{
+			"name": "tienda",
+			"item": [
+				{
+					"name": "getProductos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProductoByid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto/:id",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putCambiarPrecioProducto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto/:id/cambiar_precio?precio=5",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto",
+								":id",
+								"cambiar_precio"
+							],
+							"query": [
+								{
+									"key": "precio",
+									"value": "5"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putSolicitarProducto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto/:id/solicitar?cantidad=1",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto",
+								":id",
+								"solicitar"
+							],
+							"query": [
+								{
+									"key": "cantidad",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putVenderProducto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto/:id/vender?cantidad=1",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto",
+								":id",
+								"vender"
+							],
+							"query": [
+								{
+									"key": "cantidad",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProducto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{servidor_tienda}}/producto/:id",
+							"host": [
+								"{{servidor_tienda}}"
+							],
+							"path": [
+								"producto",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var status = 200;",
+							"",
+							"//Validamos código de respuesta",
+							"pm.test(\"Validando código de respuesta\", function () {",
+							"    pm.response.to.have.status(status);",
+							"});",
+							"",
+							"//Validamos que el formato de la respuesta sea JSON",
+							"pm.test(\"Validando cabecera Content-Type\", () => {",
+							"  pm.response.to.have.header(\"Content-Type\");",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.contains('application/json');",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "almacén 2",
+			"item": [
+				{
+					"name": "postArticulo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "default_key",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"article_info\": \"Articulo 20230224\",\r\n  \"units\": 100,\r\n  \"available\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articles",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putArticulo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "default_key",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"article_info\": \"Monitores\",\r\n  \"units\": 180,\r\n  \"available\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articles/:id",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getArticulos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "default_key",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articles",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getArticuloByid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "default_key",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articles/:id",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putAumentarStock",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "default_key",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"units_received\": 25\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articles/receive/:id",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articles",
+								"receive",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putDisminuirStock",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "default_key",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cantidad\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articles/send/:id",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articles",
+								"send",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteArticulo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "default_key",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{servidor_almacen}}/articles/:id",
+							"host": [
+								"{{servidor_almacen}}"
+							],
+							"path": [
+								"articles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "62"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var status = 200;",
+							"if(pm.info.requestName == \"postArticulo\"){",
+							"    status = 201",
+							"}",
+							"",
+							"//Validamos código de respuesta",
+							"pm.test(\"Validando código de respuesta\", function () {",
+							"    pm.response.to.have.status(status);",
+							"});",
+							"",
+							"//Validamos que el formato de la respuesta sea JSON",
+							"pm.test(\"Validando cabecera Content-Type\", () => {",
+							"  pm.response.to.have.header(\"Content-Type\");",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.contains('application/json');",
+							"});"
+						]
+					}
+				}
+			]
+		}
+	]
+}
