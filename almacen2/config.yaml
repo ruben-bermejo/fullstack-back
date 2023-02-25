@@ -1,4 +1,0 @@
-basedatos:
-  path: almacen.db
-  consumidor_almacen: eric_olek
-  consumidor_almacen_key: default_key

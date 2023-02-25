@@ -1,5 +1,0 @@
-basedatos:
-  path: ./bd/tienda3.db
-almacen:
-  base_url: http://localhost:5000
-  api_key: {'Authorization': 'default_key'}
