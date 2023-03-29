@@ -7,8 +7,15 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class TextController {
     @Autowired
-    private TextService svc;
+    public TextService svc;
     public void printText() {
-        System.out.println(this.svc.getText());
+        String texto = this.svc.getText();
+        System.out.println(texto);
+        try {
+            svc.getException();
+        } catch (Exception e) {
+            //do nothing
+        }
     }
+
 }

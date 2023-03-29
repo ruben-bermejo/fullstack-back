@@ -8,4 +8,8 @@ public class TextService {
         return "Hello, world";
     }
 
+    public void getException() throws Exception {
+        throw new Exception("Se produjo una excepción");
+    }
+
 }
