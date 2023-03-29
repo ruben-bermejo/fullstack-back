@@ -9,7 +9,6 @@ public class TextController {
     @Autowired
     private TextService svc;
     public void printText() {
-        String texto = svc.getText();
-        System.out.println(texto);
+        System.out.println(this.svc.getText());
     }
 }
