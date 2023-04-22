@@ -1,4 +1,4 @@
-package com.master.naxer.repositorios.entity;
+package com.master.naxer.repositorios.entity.relational;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

@@ -1,6 +1,6 @@
 package com.master.naxer.repositorios.controller.relational;
 
-import com.master.naxer.repositorios.entity.TextT;
+import com.master.naxer.repositorios.entity.relational.TextT;
 import com.master.naxer.repositorios.service.relational.TextServiceRelational;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
