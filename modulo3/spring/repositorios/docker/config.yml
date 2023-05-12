@@ -1,0 +1,6 @@
+#my.cnf settings
+collectors:
+  - global_status
+  - thread_status
+  - processlist
+dsn: "root:root@(192.168.1.128:3306)/test"
