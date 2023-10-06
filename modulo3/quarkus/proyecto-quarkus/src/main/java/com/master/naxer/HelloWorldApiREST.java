@@ -16,8 +16,8 @@ public class HelloWorldApiREST {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String printString() {
-        return service.getHelloString();
+    public HelloWorld printString() {
+        return new HelloWorld(service.getHelloString());
     }
 
 }
