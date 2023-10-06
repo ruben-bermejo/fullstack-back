@@ -1,5 +1,6 @@
 package com.master.naxer.repositorios.entity.documents;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,6 +10,7 @@ import java.util.List;
 @Document(collection = "text_t")
 public class TextT implements Serializable {
 
+    @Id
     private final Integer id;
     private final String textValue;
     private final String application;
