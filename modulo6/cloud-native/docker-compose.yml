@@ -1,0 +1,41 @@
+version: "3.0"
+services:
+  repositorios:
+    image: repositorios-app
+    hostname: repositorios-app
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mariadb
+      - mongo
+    networks:
+      - repositorios_network
+  mariadb:
+    image: "docker.io/mariadb:10.11"
+    hostname: mariadb
+    ports:
+      - 3307:3306
+    volumes:
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+      - mariadbdata:/var/lib/mysql
+    environment:
+      - MARIADB_DATABASE=test
+      - MARIADB_USER=user
+      - MARIADB_PASSWORD=password
+      - MARIADB_ROOT_PASSWORD=root
+    networks:
+      - repositorios_network
+  mongo:
+    image: "docker.io/mongo:4.4.18"
+    hostname: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - repositorios_network
+    volumes:
+      - mongodbdata:/data/db
+networks:
+    repositorios_network:
+volumes:
+    mongodbdata:
+    mariadbdata:
